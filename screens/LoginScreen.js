@@ -3,7 +3,7 @@ import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, Vi
 import React, {useEffect, useState} from 'react'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase'
-import Header from 'Header.js'
+
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('')
@@ -51,11 +51,8 @@ const LoginScreen = () => {
     <KeyboardAvoidingView
         style={styles.container}
     >
-        <Header 
-        name="Dayvison"
-        ultimoLogin="teste"
-        />
         
+
         <View style={styles.inputContainer}>
             <TextInput
                 placeholder="Email"
