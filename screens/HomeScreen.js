@@ -3,7 +3,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { auth } from '../firebase'
 import { signOut } from 'firebase/auth'
-import Header from '../components/Header';
 import LoginScreen from './LoginScreen';
 
 const HomeScreen = () => {
