@@ -27,14 +27,14 @@ const LoginScreen = () => {
         return unsubscribe
     }, [])
 
-    const handleLogin = async () => {
+    const handleSignUp = async () => {
         try {
-            const user = await signInWithEmailAndPassword(
+            const user = await createUserWithEmailAndPassword(
                 auth,
                 email,
                 password
-            )
-            console.log("Logou com: ", user.email)
+            );
+            console.log(user)
         } catch (error) {
             console.log(error.message)
         }
@@ -52,8 +52,8 @@ const LoginScreen = () => {
                     <TextInput placeholder='Senha' style={styles.input} onChangeText={text => setPassword(text)} secureTextEntry></TextInput>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={handleLogin} style={styles.button}>
-                        <Text style={styles.buttonText}>Entrar</Text>
+                    <TouchableOpacity onPress={handleSignUp} style={styles.button}>
+                        <Text style={styles.buttonText}>Cadastrar</Text>
                     </TouchableOpacity>
                 </View>
             </View>
