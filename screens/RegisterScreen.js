@@ -47,6 +47,7 @@ const LoginScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.mainContainer}>
+                <Text>Cadastro</Text>
                 <View style={styles.inputContainer}>
                     <TextInput placeholder='Email' style={styles.input} onChangeText={text => setEmail(text)}></TextInput>
                     <TextInput placeholder='Senha' style={styles.input} onChangeText={text => setPassword(text)} secureTextEntry></TextInput>
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderColor: '#0CE177',
         width: '100%',
+        borderWidth: 1,
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 10,

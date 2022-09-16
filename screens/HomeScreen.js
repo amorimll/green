@@ -1,19 +1,20 @@
 import { useNavigation } from '@react-navigation/core'
-import { StyleSheet, Text, TouchableOpacity, View, StatusBar, ImageBackground } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, StatusBar, ImageBackground, Image } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { auth } from '../firebase'
 import { signOut } from 'firebase/auth'
 import { Fontisto } from '@expo/vector-icons';
 import {Feather} from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons';
+import { getTeste } from '../api/index.js'
 
 const image = { uri: "https://upload.wikimedia.org/wikipedia/commons/d/d3/React_Native.png" };
 const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64;
 
-
 const HomeScreen = () => {
-
+  const data = []
   const navigation = useNavigation()
+  const [dataTeste, setTeste] = useState('')
 
   const handleSignOut = async () => {
     try {
@@ -38,6 +39,12 @@ const HomeScreen = () => {
             <Text style={styles.textoPadrao}> Última transação:</Text>
             <Text style={styles.textoLogin}> 29/08/2022</Text>
           </View>
+          <TouchableOpacity
+            onPress={handleSignOut}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Sign Out</Text>
+          </TouchableOpacity>
           <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-end' }}>
             <TouchableOpacity /*activeOpacity={0.1}*/>
               <Ionicons name="notifications-outline" size={24} color="white" />
@@ -47,14 +54,13 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
+        
       </View>
-      <View style={styles.signOut}>
-        <TouchableOpacity
-            onPress={handleSignOut}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Sign Out</Text>
-          </TouchableOpacity>
+      <View style={styles.mainContainer}>
+        <TouchableOpacity onPress={() => {navigation.replace("CadastrarPropriedade")}}>
+          <Image source={require('../pics/add.png')} style={styles.imageAdd}></Image>
+        </TouchableOpacity>
+        <Text >{dataTeste}</Text>
       </View>
     </View>
 
@@ -84,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // para alinhar verticalmente ao centro
     flexDirection: 'row', // para os elementos ficarem um ao lado do outro       
   },
-  signOut: { //area do user (nome e botão)
+  mainContainer: { //area do user (nome e botão)
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -92,8 +98,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#0782F9',
-    width: '60%',
-    padding: 15,
+    width: '20%',
+    padding: 10,
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 40
@@ -139,4 +145,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 44 / 2, //elipse
   },
+  imageAdd: {
+    width: 50,
+    height:50
+  }
 })
