@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { getTeste, postImagem } from '../api/index.js'
 import { launchImageLibrary } from 'react-native-image-picker'
 import * as ImagePicker from 'expo-image-picker'
+import axios from "axios";
 
 const RegisterProperty = () => {
 
@@ -19,14 +20,20 @@ const RegisterProperty = () => {
             quality: 1,
         });
 
-        console.log(result);
-
         if (!result.cancelled) {
             setImagem(result.uri);
-            postImagem("Teste 8")
-                .then(res => {
-                    console.log(res.data)
-                }) 
+            let formData = new FormData();
+            formData.append("file", imagem)
+            axios({
+                method: "post",
+                url: "http://192.168.1.93:5000/postImagem",
+                data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res => {
+                console.log(formData)
+            })
         }
     };
 
