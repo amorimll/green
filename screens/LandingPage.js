@@ -54,7 +54,7 @@ const LandingPage = () => {
     return (
         <View style={styles.container}>
             <View style={styles.mainContainer}>
-                <Text style={styles.titleText}>Diminua as emissões de carbono (e ganhe dinheiro com isso!)</Text>
+                <Text style={styles.titleText}>Diminua as emissões de carbono criando projetos ecológicos.</Text>
                 <Text style={styles.mainText}>Plante árvores em suas propriedades ou crie projetos ecológicos, e faça elas gerarem renda passivamente!</Text>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={handleLogin} style={styles.button}>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     mainContainer: {
-        height: '55%',
+        height: '65%',
         width: '80%',
         display: 'flex',
         justifyContent: 'space-between',
