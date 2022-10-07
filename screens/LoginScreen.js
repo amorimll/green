@@ -85,12 +85,14 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 10,
         alignItems: 'center',
+        
     },
     buttonContainer: {
         width: '60%',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 140,
+        marginTop: 5
     },
     buttonText: {
         color: 'white',

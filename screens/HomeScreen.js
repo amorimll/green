@@ -60,15 +60,42 @@ const HomeScreen = () => {
             <Text style={styles.contentSubSaldoDinheiro}>R$ 256/mês</Text>
           </View>
         </View>
-        {/* <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+        <View style={styles.contentSubCards}>
+          <View style={styles.contentSubCardsImagem}>
+            <View style={styles.headerSubImagem}>{<Image source={imagem ? imagem : anonImage} style={styles.imagemStyle} />}</View>
+          </View>
+          <View style={styles.contentSubCardsContent}>
+            <View style={styles.contentSubCardsConteudo}>
+              <Text style={styles.contentSubCardsConteudoTexto}>Propriedade 1</Text>
+              <Text style={styles.contentSubCardsConteudoTexto}>Vasta terra com cerca de 600 árvores.</Text>
+            </View>
+            <View style={styles.contentSubCardsRendimento}>
+              <Text style={styles.contentSubCardsRendimentoTexto}>R$ 172/mês</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.contentSubCards}>
+          <View style={styles.contentSubCardsImagem}>
+            <View style={styles.headerSubImagem}>{<Image source={imagem ? imagem : anonImage} style={styles.imagemStyle} />}</View>
+          </View>
+          <View style={styles.contentSubCardsContent}>
+            <View style={styles.contentSubCardsConteudo}>
+              <Text style={styles.contentSubCardsConteudoTexto}>Propriedade 2</Text>
+              <Text style={styles.contentSubCardsConteudoTexto}>Espaço agrário com foco em plantações.</Text>
+            </View>
+            <View style={styles.contentSubCardsRendimento}>
+              <Text style={styles.contentSubCardsRendimentoTexto}>R$ 84/mês</Text>
+            </View>
+          </View>
+        </View>
+        <TouchableOpacity onPress={handleSignOut} style={styles.button}>
           <Text style={styles.buttonText}>Sign Out</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => { navigation.replace("CadastrarPropriedade") }}>
           <Image source={require('../pics/add.png')} style={styles.imageAdd}></Image>
-        </TouchableOpacity>
+        </TouchableOpacity> 
       </View>
     </View>
-
   )
 }
 
@@ -88,15 +115,24 @@ const styles = StyleSheet.create({
     width: 55,
     height: 55,
     backgroundColor: '#C9C9C9',
-    opacity: 0.8,
+    opacity: 0.75,
     borderRadius: 50,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 2,
   },
   imagemStyle: {
     width: 40,
-    height: 40
+    height: 40,
   },
   body: {
     alignItems: 'center',
@@ -123,26 +159,99 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20
+    marginTop: 15,
+  },
+  contentSubCards: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: '10%',
+    backgroundColor: 'red',
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 2,
+  },
+  contentSubCardsContent: {
+    display: 'flex',
+  },
+  contentSubCardsImagem: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 150,
+    width: 125,
+    backgroundColor: '#0CE177',
+    borderBottomLeftRadius: 15,
+    borderTopLeftRadius: 15
+  },
+  contentSubCardsConteudo: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F0F0F0',
+    padding: 12,
+    width: 225,
+    height: 90,
+    borderTopRightRadius: 15
+  },
+  contentSubCardsConteudoTexto: {
+    fontFamily: 'Inter_400Regular',
+    fontSize: 16
+  },
+  contentSubCardsRendimento: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#16F385',
+    width: 225,
+    height: 60,
+    borderBottomRightRadius: 15,
+  },
+  contentSubCardsRendimentoTexto: {
+    fontFamily: 'Lato_700Bold',
+    fontSize: 19
   },
   contentSubSaldo: {
     width: '45%',
-    padding: 10,
-    backgroundColor: '#E9E9E9',
-    borderRadius: 10
+    height: '100%',
+    borderRadius: 10,
+    padding: 15,
+    backgroundColor: "#F5F5F5",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 1.5,
   },
   contentSubRendimento: {
     width: '45%',
-    padding: 10,
-    backgroundColor: '#E9E9E9',
-    borderRadius: 10
+    height: '100%',
+    borderRadius: 10,
+    padding: 15,
+    backgroundColor: "#F5F5F5",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 1.5,
   },
   contentSubSaldoText: {
     fontFamily: 'Inter_400Regular',
     fontWeight: '400',
     fontSize: 15,
     marginBottom: 10,
-    
   },
   contentSubSaldoDinheiro: {
     fontFamily: 'Inter_600SemiBold',
@@ -194,7 +303,7 @@ const styles = StyleSheet.create({
   },
   imageAdd: {
     width: 50,
-    height: 50
+    height: 50,
   }
 })
 

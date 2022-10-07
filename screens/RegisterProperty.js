@@ -43,13 +43,16 @@ const RegisterProperty = () => {
                 <TextInput placeholder='Endereço' style={styles.input}></TextInput>
                 <TextInput placeholder='Latitude' style={styles.input} onChangeText={e => setLat(e)}></TextInput>
                 <TextInput placeholder='Longitude' style={styles.input} onChangeText={e => setLon(e)}></TextInput>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={postDocument}>
                     <Text>Calcular Rendimento</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={postDocument}>
+                <TouchableOpacity style={styles.button} >
                     <Text>Cadastrar</Text>
                 </TouchableOpacity>
-                <Text style={styles.textoTeste}>{numArvores}</Text>
+                <View style={styles.mainContainerQuantidade}>
+                    <Image source={ require('../pics/tree.png')} style={styles.iconStyle} />
+                    <Text style={styles.textoTeste}>{numArvores}</Text>
+                </View>
             </View>
         </View>
     )
@@ -58,6 +61,10 @@ const RegisterProperty = () => {
 export default RegisterProperty
 
 const styles = StyleSheet.create({
+    iconStyle: {
+        width: 40,
+        height: 40
+    },
     imagemStyle: {
         width: 175,
         height: 175,
@@ -66,8 +73,12 @@ const styles = StyleSheet.create({
         borderColor: '#0CE177',
         backgroundColor: '#F5F5F5'
     },
+    mainContainerQuantidade: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
     textoTeste: {
-        fontSize: 40
+        fontSize: 30
     },
     container: {
         backgroundColor: 'white',
