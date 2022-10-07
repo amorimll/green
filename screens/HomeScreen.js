@@ -88,10 +88,13 @@ const HomeScreen = () => {
             </View>
           </View>
         </View>
-        <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+        <View>
+          
+        </View>
+        {/* <TouchableOpacity onPress={handleSignOut} style={styles.button}>
           <Text style={styles.buttonText}>Sign Out</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => { navigation.replace("CadastrarPropriedade") }}>
+        </TouchableOpacity> */}
+        <TouchableOpacity style={{marginTop: 40}}onPress={() => { navigation.replace("CadastrarPropriedade") }}>
           <Image source={require('../pics/add.png')} style={styles.imageAdd}></Image>
         </TouchableOpacity> 
       </View>
@@ -154,11 +157,15 @@ const styles = StyleSheet.create({
   },
   content: { //area do user (nome e botão)
     width: '85%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   contentSub: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: '100%',
     marginTop: 15,
   },
   contentSubCards: {
