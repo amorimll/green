@@ -8,7 +8,7 @@ const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight + 22 :
 const image = {uri: "https://upload.wikimedia.org/wikipedia/commons/d/d3/React_Native.png"};
 import { Fontisto } from '@expo/vector-icons';
 
-export default function Header({email}) {
+export default function Header() {
     return(
         <View style={styles.container}>
             <View style={styles.content}>

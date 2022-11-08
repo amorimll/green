@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { StyleSheet, Text, TouchableOpacity, View, StatusBar, ImageBackground, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { auth } from '../firebase'
+import axios from "axios";
 import { signOut } from 'firebase/auth'
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons'
@@ -9,10 +10,30 @@ import { Ionicons } from '@expo/vector-icons';
 import { getTeste } from '../api/index.js'
 import { useFonts, Inter_700Bold, Inter_400Regular, Inter_600SemiBold } from '@expo-google-fonts/inter';
 import { Lato_700Bold, Lato_400Regular } from '@expo-google-fonts/lato';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
+import { db } from '../firebase'
 
 const statusBarHeight = StatusBar.currentHeight ? StatusBar.currentHeight + 22 : 64;
 
 const HomeScreen = () => {
+  const propertiesCollection = collection(db, "users/" + auth.currentUser.uid + "/properties");
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const dataUsers = await getDocs(propertiesCollection)
+      setData(dataUsers.docs.map((doc) => ({...doc.data(), id: doc.id})))
+    }
+    fetchData()
+  }, [])
+
   const anonImage = require('../pics/anonImage4.png')
 
   let [fontsLoaded] = useFonts({
@@ -38,9 +59,23 @@ const HomeScreen = () => {
     }
   }
 
+  const postDocument = (latitude, longitude) => {
+    const url = "http://192.168.1.93:5000/postImagem"
+    const formData = new FormData()
+
+    formData.append('latitude', latitude)
+    formData.append('longitude', longitude)
+    axios.post(url, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    })
+  }
+
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <View style={styles.body} >
       <View style={styles.header}>
@@ -48,6 +83,9 @@ const HomeScreen = () => {
           <View style={styles.headerSubImagem}>{<Image source={imagem ? imagem : anonImage} style={styles.imagemStyle} />}</View>
           <Text style={styles.headerSubText}>Olá, <Text style={styles.headerSubTextBold}>{auth.currentUser?.email}.</Text></Text>
         </View>
+        <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+          <Text style={styles.buttonText}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.content}>
         <View style={styles.contentSub}>
@@ -60,7 +98,34 @@ const HomeScreen = () => {
             <Text style={styles.contentSubSaldoDinheiro}>R$ 256/mês</Text>
           </View>
         </View>
-        <View style={styles.contentSubCards}>
+          {data.map((element, key) => {
+            return (
+            <TouchableOpacity style={styles.contentSubCards} key={key.toString()} onPress={() => { navigation.navigate('Propriedade', 
+            {
+              nome: element.nome,
+              descricao: element.descricao,
+              endereco: element.endereco,
+              latitude: element.latitude,
+              longitude: element.longitude,
+              numArv: element.numArv
+              }); postDocument(element.latitude, element.longitude)}}>
+              <View style={styles.contentSubCardsImagem}>
+                <View style={styles.headerSubImagem}>{<Image source={imagem ? imagem : anonImage} style={styles.imagemStyle} />}</View>
+              </View>
+              <View style={styles.contentSubCardsContent}>
+                <View style={styles.contentSubCardsConteudo}>
+                  <Text style={styles.contentSubCardsConteudoTexto}>{element.nome}</Text>
+                  <Text style={styles.contentSubCardsConteudoTexto}>{element.descricao}</Text>
+                  <Text style={styles.contentSubCardsConteudoTexto}>{element.endereco}</Text>
+                </View>
+                <View style={styles.contentSubCardsRendimento}>
+                  <Text style={styles.contentSubCardsRendimentoTexto}>{element.numArv} Árvores / R$ {(Number(element.numArv) * 0.50)}/mês</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+            )
+          })}
+        {/* <View style={styles.contentSubCards}>
           <View style={styles.contentSubCardsImagem}>
             <View style={styles.headerSubImagem}>{<Image source={imagem ? imagem : anonImage} style={styles.imagemStyle} />}</View>
           </View>
@@ -73,8 +138,8 @@ const HomeScreen = () => {
               <Text style={styles.contentSubCardsRendimentoTexto}>R$ 172/mês</Text>
             </View>
           </View>
-        </View>
-        <View style={styles.contentSubCards}>
+        </View> */}
+        {/* <View style={styles.contentSubCards}>
           <View style={styles.contentSubCardsImagem}>
             <View style={styles.headerSubImagem}>{<Image source={imagem ? imagem : anonImage} style={styles.imagemStyle} />}</View>
           </View>
@@ -87,14 +152,10 @@ const HomeScreen = () => {
               <Text style={styles.contentSubCardsRendimentoTexto}>R$ 84/mês</Text>
             </View>
           </View>
-        </View>
-        <View>
-          
-        </View>
-        {/* <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-          <Text style={styles.buttonText}>Sign Out</Text>
-        </TouchableOpacity> */}
-        <TouchableOpacity style={{marginTop: 40}}onPress={() => { navigation.replace("CadastrarPropriedade") }}>
+        </View> */}
+
+        
+        <TouchableOpacity style={{marginTop: 40}} onPress={() => { navigation.replace("CadastrarPropriedade") }}>
           <Image source={require('../pics/add.png')} style={styles.imageAdd}></Image>
         </TouchableOpacity> 
       </View>
@@ -265,12 +326,17 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   button: {
-    backgroundColor: '#0782F9',
-    width: '20%',
-    padding: 10,
-    borderRadius: 10,
+    backgroundColor: '#0C9852',
+    width: 80,
+    height: 40,
+    borderRadius: 5,
     alignItems: 'center',
-    marginTop: 40
+    marginTop: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 33
   },
   buttonText: {
     color: 'white',
@@ -313,23 +379,3 @@ const styles = StyleSheet.create({
     height: 50,
   }
 })
-
-  //         < View style = { styles.content } >
-  //         <TouchableOpacity /*activeOpacity={0.1}*/ style={styles.buttonUser}>
-  //           <ImageBackground source={{ uri: 'https://scontent-gig2-1.xx.fbcdn.net/v/t39.30808-6/280370677_7447181435352331_1439375223080131899_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeG6rFJcmeoNtOQ8uMTWNfRpg-yXgJfy09yD7JeAl_LT3GaH8eeVKwf_WisnR9nzr0RNxOvwHPKfs7f9ngjNc_TQ&_nc_ohc=VxBgZKrIeLUAX8xF-zj&_nc_ht=scontent-gig2-1.xx&oh=00_AT_ZY_8A_GZg3ROH4FPJITb1iDKQqA3wEZxv6alCv69F1g&oe=6311A542' }}  /*resizeMode="cover"*/ style={styles.image} imageStyle={{ borderRadius: 44 / 2 }}></ImageBackground>
-  //         </TouchableOpacity>
-  //         <View style={{ flex: 1, flexDirection: 'column' }}>
-  //           <Text style={styles.username}> Olá, {auth.currentUser?.email}</Text>
-  //           <Text style={styles.textoPadrao}> Última transação:</Text>
-  //           <Text style={styles.textoLogin}> 29/08/2022</Text>
-  //         </View>
-
-  //         <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-end' }}>
-  //           <TouchableOpacity /*activeOpacity={0.1}*/>
-  //             <Ionicons name="notifications-outline" size={24} color="white" />
-  //           </TouchableOpacity>
-  //           <TouchableOpacity /*activeOpacity={0.1}*/>
-  //             <Fontisto name="low-vision" size={24} color="white" />
-  //           </TouchableOpacity>
-  //         </View>
-  //       </View >

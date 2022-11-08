@@ -46,7 +46,9 @@ const LoginScreen = () => {
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity style={styles.headerButton} onPress={() => { navigation.navigate('LandingPage') }}><Text style={styles.headerButtonText}>Voltar</Text></TouchableOpacity>
             <View style={styles.mainContainer}>
+                
                 <Text>Login</Text>
                 <View style={styles.inputContainer}>
                     <TextInput placeholder='Email' style={styles.input} onChangeText={text => setEmail(text)}></TextInput>
@@ -63,6 +65,24 @@ const LoginScreen = () => {
 }
 
 const styles = StyleSheet.create({
+    headerButton: {
+        backgroundColor: '#0CE177',
+        width: 80,
+        height: 40,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 10,
+        borderRadius: 5,
+        position: 'absolute',
+        top: 40,
+        left: 5
+    },
+    headerButtonText: {
+        fontFamily: 'Inter_700Bold',
+        fontSize: 17,
+        color: 'white'
+    },  
     container: {
         backgroundColor: 'white',
         height: '100%',
